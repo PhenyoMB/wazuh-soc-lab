@@ -1,12 +1,14 @@
 # Wazuh SOC Home Lab
 
-A hands-on Security Operations Center (SOC) home lab focused on endpoint telemetry collection, log analysis, event correlation, authentication investigation, and dashboard development with Wazuh.
+A hands-on Security Operations Center (SOC) home lab focused on deploying Wazuh, collecting endpoint telemetry, exploring Windows and Linux security events, and building a basic monitoring dashboard.
 
-> **Scope:** This documents controlled activity performed on my own virtual machines. It is a learning lab, not a production SOC deployment. The exact Wazuh and operating-system versions were not recorded in the supplied notes, so they are not guessed.
+> **Current status:** This stage is primarily a lab setup and dashboard demonstration. It establishes the environment, confirms that endpoint logs are being collected, and presents selected activity in a dashboard. A full end-to-end security investigation, File Integrity Monitoring (FIM) detections, and Active Response are planned future stages, not completed features.
+>
+> This is a learning environment built on virtual machines, not a production SOC deployment.
 
 ## Project overview
 
-I configured Windows and Linux monitoring, enabled Wazuh archives, deployed Sysmon on Windows, generated controlled account and authentication activity, investigated the resulting telemetry, and built a basic SOC activity dashboard.
+I configured Windows and Ubuntu monitoring, enabled Wazuh archives, deployed Sysmon on Windows, generated controlled account and authentication activity, checked that relevant telemetry was arriving, and built a basic SOC activity dashboard. This phase demonstrates setup, data collection, event exploration, and visualization rather than a completed incident investigation.
 
 **Skills demonstrated**
 - Deploying and enrolling Windows and Linux Wazuh agents.
@@ -17,6 +19,18 @@ I configured Windows and Linux monitoring, enabled Wazuh archives, deployed Sysm
 - Correlating SSH authentication, session lifecycle, process identifiers, and command activity.
 - Building metric, line-chart, and data-table visualizations.
 - Mapping simulated behaviours to MITRE ATT&CK.
+
+## Lab environment
+
+The lab runs in **VMware Workstation Pro 25.0.0.24995812** on a Windows host. The virtual machines and their allocated virtual disk capacities are:
+
+| Virtual machine | Operating system / software | Allocated virtual disk |
+|---|---|---:|
+| Windows endpoint | Windows 11 | 100 GB |
+| Linux endpoint | Ubuntu Server 24.04 | 50 GB |
+| Wazuh server | Wazuh 4.14.9 | 100 GB |
+
+These figures describe the virtual disk capacities allocated to each VM, not necessarily the amount of disk space currently consumed. The Wazuh VM's operating system was not separately specified in the supplied details, so it is not assumed here.
 
 ## Lab architecture
 
@@ -52,7 +66,7 @@ The environment uses VMware virtual machines on a private lab network. IP addres
 
 | Component | Role |
 |---|---|
-| Wazuh manager, indexer, dashboard | Central collection, analysis, indexing, search, and visualization |
+| Wazuh 4.14.9 manager, indexer, dashboard | Central collection, analysis, indexing, search, and visualization |
 | Wazuh Windows agent | Windows endpoint telemetry collection |
 | Wazuh Linux agent | Ubuntu endpoint telemetry collection |
 | Ubuntu Server | Linux endpoint for SSH and user/session activity |
@@ -60,11 +74,11 @@ The environment uses VMware virtual machines on a private lab network. IP addres
 | Sysmon | Additional Windows system telemetry |
 | Sysmon Modular (Olaf Hartong) | Sysmon configuration used in the lab |
 | Filebeat | Forwards archive events for indexing |
-| VMware | Hosts the virtual machines |
+| VMware Workstation Pro 25.0.0.24995812 | Hosts the virtual machines |
 | Windows CMD / PowerShell | Generates controlled local-account and authentication activity |
 | SSH client | Generates failed and successful SSH authentication and session activity |
 
-**Versions:** Exact Wazuh, Windows, Ubuntu, Sysmon, and Filebeat versions were not captured. Add versions from the installed systems rather than estimating them.
+**Known versions:** Wazuh 4.14.9, Ubuntu Server 24.04, Windows 11, and VMware Workstation Pro 25.0.0.24995812. The exact Sysmon and Filebeat versions were not supplied; add them after checking the installed systems.
 
 ## Telemetry collection and archive configuration
 
@@ -406,12 +420,28 @@ The images below are the existing files in the repository's images/ directory. C
 - **Dashboards depend on correct field mappings.** Refreshing the index-pattern field list resolved missing field options during chart construction.
 - **Document only what was tested.** These simulations demonstrate telemetry and investigation skills; they do not prove every event automatically triggers a Wazuh alert rule.
 
-## Recommended next steps
+## Planned work
 
-- Record exact Wazuh, Windows, Ubuntu, Sysmon, and Filebeat versions.
-- Confirm the Wazuh manager host/IP and update the architecture diagram.
-- Add an investigation write-up for each scenario: objective, steps, query, evidence, interpretation, and limitations.
-- Add a custom Wazuh detection rule and test positive and negative cases.
+The following are the next stages of the lab. They are **planned**, and should not be read as features already implemented or tested.
+
+1. **File Integrity Monitoring (FIM) and custom rules**
+   - Configure Wazuh FIM to monitor selected files and directories on the endpoints.
+   - Generate controlled file changes and observe the resulting events.
+   - Develop and test custom detection rules, including positive and negative test cases.
+
+2. **Active Response**
+   - Configure a controlled Active Response workflow for a suitable test detection.
+   - Validate the trigger conditions, response action, execution logs, and recovery process.
+   - Keep the response safely scoped to the isolated lab environment.
+
+3. **A practical security investigation**
+   - Run a defined simulation and investigate it from initial telemetry through alert triage and evidence collection.
+   - Document the timeline, affected host/account, relevant event fields, queries, MITRE ATT&CK mapping, findings, and recommended response.
+   - Clearly distinguish observed evidence from assumptions and note any limitations.
+
+Other maintenance items:
+- Confirm the Wazuh manager host/IP and update the architecture diagram if needed.
+- Record exact Sysmon and Filebeat versions.
 - Document archive retention settings and monitor disk usage.
 - Redact credentials and sensitive host details from screenshots. Never store passwords in README files, screenshots, shell history, or Git history.
 
