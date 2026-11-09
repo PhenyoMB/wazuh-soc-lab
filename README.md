@@ -52,13 +52,10 @@ The environment uses VMware virtual machines on a private lab network. IP addres
                                v
                   Wazuh manager / indexer /
                        dashboard stack
-                   (host/IP to confirm)
+                       192.168.149.133
 
-   SSH pbareki host noted: 192.168.149.133
    Windows RDP account noted: Peter
 ~~~
-
-**Address clarification:** Notes label 192.168.149.133 as the “SSH pbareki server”, 192.168.149.132 as the Ubuntu server, and 192.168.149.134 as Windows. Confirm which host runs the Wazuh manager before treating the diagram as definitive.
 
 [Browse the existing lab screenshots](images/)
 
@@ -78,7 +75,7 @@ The environment uses VMware virtual machines on a private lab network. IP addres
 | Windows CMD / PowerShell | Generates controlled local-account and authentication activity |
 | SSH client | Generates failed and successful SSH authentication and session activity |
 
-**Known versions:** Wazuh 4.14.9, Ubuntu Server 24.04, Windows 11, and VMware Workstation Pro 25.0.0.24995812. The exact Sysmon and Filebeat versions were not supplied; add them after checking the installed systems.
+**VM versions:** Wazuh 4.14.9, Ubuntu Server 24.04, Windows 11, and VMware Workstation Pro 25.0.0.24995812. 
 
 ## Telemetry collection and archive configuration
 
@@ -96,8 +93,6 @@ References:
 - [Wazuh event logging and archive configuration](https://documentation.wazuh.com/current/user-manual/manager/event-logging.html)
 - [Wazuh indexer indices and enabling archives](https://documentation.wazuh.com/current/user-manual/wazuh-indexer/wazuh-indexer-indices.html)
 - [Wazuh global configuration: logall and logall_json](https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/global.html)
-
-**Operational consideration:** Archive collection increases storage consumption because it retains events that may not trigger alerts. Monitor disk usage and define an appropriate retention or cleanup policy.
 
 ## Attack simulations and detection scenarios
 
@@ -131,9 +126,6 @@ Interpret an Event ID together with its **provider and event log/channel**. The 
 
 - [Microsoft Learn: Windows Security event reference](https://learn.microsoft.com/azure/sentinel/windows-security-event-id-reference)
 
-**Screenshot discrepancy to resolve:** The existing filename “23 Event ID 420 User account creation.png” says Event ID 420, while the written walkthrough identifies account creation as Event ID 4720. Verify the number visible in the screenshot and rename the file if it shows 4720. Do not claim the screenshot proves 4720 until checked.
-
-**Event ID 4738 clarification:** 4738 means a user account was changed. It is not specifically a password-change event. Password-change and password-reset events have separate identifiers (4723 and 4724).
 
 ## Investigation notes and correlation fields
 
@@ -189,11 +181,7 @@ For the Linux failed-SSH table, filter to the Linux agent and search for:
 "failed password"
 ~~~
 
-If a field is unavailable to the visualization builder, refresh the field list for the relevant index pattern in Dashboard Management. The walkthrough records that this resolved missing field options during chart construction.
-
 ## Screenshots
-
-The images below are the existing files in the repository's images/ directory. Captions describe the activities recorded in the supplied notes and filenames. The screenshots have not been independently inspected at pixel level in this update. Before public release, review them for exposed passwords, usernames, hostnames, IP addresses, and other sensitive information.
 
 ### Archive setup and endpoint telemetry
 
@@ -438,13 +426,6 @@ The following are the next stages of the lab. They are **planned**, and should n
    - Run a defined simulation and investigate it from initial telemetry through alert triage and evidence collection.
    - Document the timeline, affected host/account, relevant event fields, queries, MITRE ATT&CK mapping, findings, and recommended response.
    - Clearly distinguish observed evidence from assumptions and note any limitations.
-
-Other maintenance items:
-- Confirm the Wazuh manager host/IP and update the architecture diagram if needed.
-- Record exact Sysmon and Filebeat versions.
-- Document archive retention settings and monitor disk usage.
-- Redact credentials and sensitive host details from screenshots. Never store passwords in README files, screenshots, shell history, or Git history.
-
 ## References
 
 - [Wazuh: Event logging and archives](https://documentation.wazuh.com/current/user-manual/manager/event-logging.html)
