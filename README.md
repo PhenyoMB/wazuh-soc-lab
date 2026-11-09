@@ -28,7 +28,7 @@ The lab runs in **VMware Workstation Pro 25.0.0.24995812** on a Windows host. Th
 |---|---|---:|
 | Windows endpoint | Windows 11 | 100 GB |
 | Linux endpoint | Ubuntu Server 24.04 | 50 GB |
-| Wazuh server | Wazuh 4.14.9 | 100 GB |
+| Wazuh server | Wazuh 4.14.9 | 200 GB |
 
 These figures describe the virtual disk capacities allocated to each VM, not necessarily the amount of disk space currently consumed. The Wazuh VM's operating system was not separately specified in the supplied details, so it is not assumed here.
 
