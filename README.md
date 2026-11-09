@@ -102,8 +102,8 @@ These were controlled simulations against the lab's own virtual machines. ATT&CK
 |---|---|---|---|
 | Local account creation | Created a temporary Windows user with net user. | Security Event ID 4720; account name and SID. | [T1136.001 – Create Account: Local Account](https://attack.mitre.org/techniques/T1136/001/) |
 | Add user to local Administrators | Added the temporary account to the local Administrators group. | Event ID 4732; target member SID and group SID/name. | [T1098.007 – Additional Local or Domain Groups](https://attack.mitre.org/techniques/T1098/007/) |
-| Account deletion | Deleted the temporary Windows user. | Event ID 4726; subject (actor) and target account. | Account-management behaviour; no narrower mapping asserted. |
-| Guest account enablement | Enabled the Guest account during the test. | Event ID 4722. | Account-management behaviour; no narrower mapping asserted. |
+| Account deletion | Deleted the temporary Windows user. | Event ID 4726; subject (actor) and target account. ||
+| Guest account enablement | Enabled the Guest account during the test. | Event ID 4722. ||
 | Windows failed logons | Entered incorrect passwords to generate failed logons. | Event ID 4625. | [T1110.001 – Password Guessing](https://attack.mitre.org/techniques/T1110/001/) |
 | Linux SSH failed authentication | Attempted SSH with an invalid username and incorrect passwords. | “Failed password” / “invalid user” messages, source IP, attempted username. | [T1110.001 – Password Guessing](https://attack.mitre.org/techniques/T1110/001/) |
 | Successful SSH login and session | Authenticated with the lab user, ran commands, and exited. | Accepted-password message, session-open/close messages, session ID, SSHD PID, command telemetry. | [T1078.003 – Local Accounts](https://attack.mitre.org/techniques/T1078/003/) |
